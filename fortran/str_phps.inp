@@ -1,0 +1,29 @@
+! Streeter-Phelps Program Input File
+! Exclamation is comment, delimiter is double colon
+!
+! river length meters
+rlen: 1000000
+! river width, meters
+rwid: 11.21
+! river flow, cub. m/s
+rq: 50
+! river slope, m/m
+rs: 0.002
+! river Manning's Roughness, unitless
+n: 0.04
+! wastewater flow, cub. m/s
+wwq: 0.5
+! number of elements in model
+rint: 100
+! river temp, C (constant, for now)
+rtmp: 24.2
+! BOD decay rate, 1/d
+bod_k: 0.607
+! ambient BOD load in river, mg/L
+rbod0: 6.7
+! ambient DO in river, mg/L
+rdo0: 8.3
+! BOD load from discharge, mg/L
+wwbod0: 97
+!DO in discharge effluent, mg/L
+wwdo0: 2.7
