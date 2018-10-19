@@ -1,0 +1,9 @@
+*.exe
+*.obj
+*.pyd
+*.o
+*.mod
+*.ErrorLog
+*.BuildLog
+*.png
+*/DO_curve.txt
