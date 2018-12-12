@@ -33,7 +33,7 @@ import numpy as np
 
 os.chdir(r'..\fortran')
 import str_phps as sp
-
+pdb.set_trace()
 ##--------Run From Input File-----------------
 # input file
 file_path = 'str_phps.inp'
