@@ -49,7 +49,7 @@ If you want to work with the model, you can access it two different ways. You ca
 
 #### Get the Model and the Supporting Tools
 
-Download the Streeter-Phelps model files from [here](www.link2dist.com). Save the files on your computer. Make sure you put them somewhere where you have full write permissions (e.g., not  C:/ProgramFiles for Windows users).  
+Download the Streeter-Phelps model files from [here](https://github.com/HWR-llc/Streeter-Phelps_F2PY/releases/tag/v1.1) or you can connect to the [repo](https://github.com/HWR-llc/Streeter-Phelps_F2PY.git). Save the files on your computer. Make sure you put them somewhere where you have full write permissions (e.g., not  C:/ProgramFiles for Windows users).  
 
 If you don't already have them, you will need to get a couple of tools to run the model. You will need a **Fortran compiler**. We will use the Fortran compiler to run the Streeter-Phelps model as an exectuable program. You can use a Windows based compiler (e.g., [Silverfrost FTN95](https://www.silverfrost.com/)), but you will also need to download a GNU compiler (e.g., [gfortran](https://gcc.gnu.org/wiki/GFortran)) to work with F2PY. 
 
@@ -102,7 +102,7 @@ I have tested this with MacOSX 10.10.5 [Yosemite](https://en.wikipedia.org/wiki/
  3. Double click the .dmg file. Extract the folder.
  4. In your Terminal, navigate to the folder that has the .pkg file.
  5. Type `sudo installer -pkg gfortran.pkg -target /`. This will install gfortran.
- 6. type `gfortran --version`. You should get a response that begins: `GNU Fortran (GCC) 5.2.0…`
+ 6. type `gfortran --version`. You should get a response that begins: `GNU Fortran (GCC) 5.2.0Â…`
 
 The next tool to get is Anaconda/Miniconda. If already have one of these you are all set (I recommend doing step 4 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you made that choice.
 
