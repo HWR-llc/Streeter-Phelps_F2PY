@@ -1,0 +1,46 @@
+name: fm_win
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - backports=1.0=py_2
+  - backports.functools_lru_cache=1.5=py_1
+  - backports_abc=0.5=py_1
+  - ca-certificates=2018.10.15=ha4d7672_0
+  - certifi=2018.10.15=py27_1000
+  - cycler=0.10.0=py_1
+  - freetype=2.9.1=hf819b56_1004
+  - functools32=3.2.3.2=py_3
+  - futures=3.2.0=py27_1000
+  - icu=58.2=vc9_0
+  - jpeg=9b=vc9_2
+  - kiwisolver=1.0.1=py27hdc96acc_1002
+  - libpng=1.6.34=vc9_0
+  - matplotlib=2.2.3=py27h7423b85_0
+  - mkl_fft=1.0.6=py27_0
+  - openssl=1.0.2p=h0c8e037_1001
+  - pip=18.1=py27_1000
+  - pyparsing=2.3.0=py_0
+  - pyqt=5.6.0=py27h4cbc711_7
+  - python=2.7.15=h2880e7c_1004
+  - python-dateutil=2.7.5=py_0
+  - pytz=2018.7=py_0
+  - qt=5.6.2=vc9_1
+  - setuptools=40.5.0=py27_0
+  - singledispatch=3.4.0.3=py27_1000
+  - sip=4.18.1=py27hc56fc5f_0
+  - six=1.11.0=py27_1001
+  - tk=8.6.8=vc9_0
+  - tornado=5.1.1=py27h0c8e037_1000
+  - vc=9=0
+  - vs2008_runtime=9.0.30729.6161=0
+  - wheel=0.32.2=py27_0
+  - wincertstore=0.2=py27_1002
+  - zlib=1.2.11=vc9_0
+  - blas=1.0=mkl
+  - icc_rt=2017.0.4=h97af966_0
+  - intel-openmp=2019.0=118
+  - mkl=2018.0.3=1
+  - numpy=1.15.1=py27hbe4291b_0
+  - numpy-base=1.15.1=py27h2753ae9_0
+

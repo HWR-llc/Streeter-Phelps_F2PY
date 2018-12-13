@@ -1,6 +1,7 @@
 *.exe
 *.obj
 *.pyd
+*.so
 *.o
 *.mod
 *.ErrorLog

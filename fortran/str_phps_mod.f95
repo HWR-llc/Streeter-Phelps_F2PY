@@ -77,7 +77,7 @@ SUBROUTINE read_inp(file_path, r_len, r_wid, r_flow, r_s, man_n, elem_count,ww_f
   REAL var_value
   999 FORMAT(F16.0)
   char_pos = 1
-  inp_total = 11
+  inp_total = 13
   inp_count = 1
   OPEN(unit = 300, file = file_path)
   DO WHILE(inp_count <= inp_total)
