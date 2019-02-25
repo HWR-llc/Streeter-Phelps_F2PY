@@ -1,8 +1,11 @@
 
+
 # Streeter-Phelps Model with F2PY
 In the field of water resources, many of the models that we use today were written 20 years ago or more. I call these models legacy models. It is increasingly hard to use these models because they were made for older computer systems. As operating systems advance, we have to come up with creative ways to use legacy models. Some people keep old computers (with old operating systems) on hand for just this purpose. Other people set up a virtual machine to run an operating system that is compatible with the program. Neither of these work-arounds are ideal. 
 
 I think the best solution would be to have an updated version of the program that is compatible with current operating systems. Many of the legacy models have computational engines that were written in [Fortran](https://en.wikipedia.org/wiki/Fortran). So I set out to find a reasonable way to bring these legacy Fortran models into an easily accessible environment that is compatible with modern computers.  
+
+You can read about what I came up with below, but if you just want to try out the code and you have all the tools you need (Fortran compiler, Anaconda/Miniconda), you can use this [Quick Start](link).
 ### Streeter-Phelps Model in Fortran
 The first thing that I needed was a Fortran model to work with. So I wrote a (relatively) simple [Streeter-Phelps](https://en.wikipedia.org/wiki/Streeter%E2%80%93Phelps_equation) model in Fortran95. Streeter-Phelps predicts dissolved oxygen (DO) in a river as a function of:
  - DO at the upstream end of model,
@@ -45,73 +48,71 @@ We have a Fortran model, and we have a method for accessing it in a modern compu
 
 ### Working with the Streeter-Phelps Model
 
-If you want to work with the model, you can access it two different ways. You can either compile and run the Fortran code (*the boring way*) or you can use F2PY to create a Python interface (*the exciting way*). These instructions tell you how to both.
+If you want to work with the model, you can access it two different ways. You can either compile and run the Fortran code or you can use F2PY to create a Python interface. The second option is more exciting because it allows you to access all of the powerful packages that other people have written for Python (e.g., GUIs). These instructions tell you how to both.
 
 #### Get the Model and the Supporting Tools
-
-Download the Streeter-Phelps model files from [here](https://github.com/HWR-llc/Streeter-Phelps_F2PY/releases/tag/v1.1) or you can connect to the [repo](https://github.com/HWR-llc/Streeter-Phelps_F2PY.git). Save the files on your computer. Make sure you put them somewhere where you have full write permissions (e.g., not  C:/ProgramFiles for Windows users).  
-
-If you don't already have them, you will need to get a couple of tools to run the model. You will need a **Fortran compiler**. We will use the Fortran compiler to run the Streeter-Phelps model as an exectuable program. You can use a Windows based compiler (e.g., [Silverfrost FTN95](https://www.silverfrost.com/)), but you will also need to download a GNU compiler (e.g., [gfortran](https://gcc.gnu.org/wiki/GFortran)) to work with F2PY. 
-
-You will also need either **[Anaconda](https://www.anaconda.com/) or [Miniconda](https://conda.io/miniconda.html)**. Anaconda is a free data science platform for Python. Miniconda is light version of Anaconda that excludes all of the default packages that come with Anaconda.  The Windows download for Anaconda is ~600 MB whereas Miniconda is only ~50MB.  The details of getting and installing these tools will depend on your operating system. I've written separate instructions for Windows, Linux, and Mac. So follow your operating system instructions below. The instructions merge again after all the tools are installed. A quick note for Mac users. Anaconda/Miniconda are only available as 64-bit installations for Macs. So if you have a 32-bit Mac, you will not be able to use this Streeter-Phelps model in Python.
+There are operating specific installation instructions below. In general, you will need three things to run the Streeter-Phelps model. You will need: the model files, a Fortran compiler, and an installation of Python. A quick note for Mac users. These instructions use Anaconda/Miniconda, and Anaconda/Miniconda require 64-bit operating systems. So if you have a 32-bit Mac, you will not be able to use this Streeter-Phelps model in Python.
 ##### Windows Install
 For Windows operating systems, you can use a non-GNU compiler to run the FORTRAN, but since you will need a GNU-compiler for the Python interface, I'm ignoring that option. 
- 1. Download [MingGW-w64](https://sourceforge.net/projects/mingw-w64/) (Minimalist GNU Environment for Windows))
- 2. Install to `C:\mingw` (this location is not necessarily required, but it will help you stay on the same page with subsequent directions) with these options: 
+ 1. Download the Streeter-Phelps model files from [here](https://github.com/HWR-llc/Streeter-Phelps_F2PY/releases/tag/v1.1) or you can connect to the [repo](https://github.com/HWR-llc/Streeter-Phelps_F2PY.git).
+ 2. Download [MingGW-w64](https://sourceforge.net/projects/mingw-w64/) (Minimalist GNU Environment for Windows))
+ 3. Install to `C:\mingw` (this location is not necessarily required, but it will help you stay on the same page with subsequent directions) with these options: 
    -  Architecture: x86-64
    - Threads: posix
    - Exception: seh
- 3. Add MinGW to the system path 
-     - (Control Panel --> Advanced System Settings --> Environment Variables --> System Variables --> Path --> Add C:\mingw\mingw64\bin
+ 4. Add MinGW to the system path 
      - **When adding MinGW, make sure you do not accidentally delete any values already in the Path.**
- 4. To make sure the System Path is updated, restart your computer.
- 5. Open a Command Prompt and type `gfortran --verson`. You should get a response that begins: `gcc (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0 ...`
+     - (Control Panel --> Advanced System Settings --> Environment Variables --> System Variables --> Path --> Add C:\mingw\mingw64\bin
+ 5. To make sure the System Path is updated, restart your computer.
+ 6. Open a Command Prompt and type `gfortran --verson`. You should get a response that includes: `...(x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0 ...`
 
-The next tool to get is Ananconda/Miniconda. If already have one of these you are all set (I recommend doing step 4 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you make that choice.
+The next tool to get is Ananconda/Miniconda. If already have one of these you are all set (I recommend doing step 9 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you make that choice.
 
- 1. Download the [Miniconda](https://conda.io/miniconda.html) .exe installer.
- 2. After it downloads, use the default installation options except for the installation location. Install the program to `C:\Miniconda2`.  
- 3. A program called Anaconda Prompt will be installed on your computer and it should be in your Start menu. Double click on the program and it opens a command line window ("Anaconda Prompt").
- 4. In the Anaconda Prompt, type `conda list`. You should get response that begins: `# packages in environment at C:\Anaconda2:`
- 5. For troubleshooting the install, see the [detailed installation instructions](https://conda.io/docs/user-guide/install/index.html). 
+ 7. Download the [Miniconda](https://conda.io/miniconda.html) .exe installer.
+ 8. After it downloads, use the default installation options except for the installation location. Install the program to `C:\Miniconda2`.  
+ 9. A program called Anaconda Prompt will be installed on your computer and it should be in your Start menu. Double click on the program and it opens a command line window ("Anaconda Prompt").
+ 10. In the Anaconda Prompt, type `conda list`. You should get response that begins: `# packages in environment at C:\Anaconda2:`
+ 11. For troubleshooting the install, see the [detailed installation instructions](https://conda.io/docs/user-guide/install/index.html). 
 
 If you have MingGW and Miniconda installed correctly, you are all set. You can now start working with the Streeter-Phelps model.
 
  ##### Linux Install
 I have tested this with [Ubuntu](https://www.ubuntu.com/) LTS 16.04. If you are using a different version of Linux, some changes to the installation steps may be required, but I assume if you are running Linux that you know how to work this out on your own. The first tool you will need is a Fortran compiler. I have tested everything with [gfortran](https://gcc.gnu.org/wiki/GFortran), so I recommend that.
 
- 1. Open a Terminal and type `sudo apt install gfortran`. 
- 2. After the installation is complete (with default options), type `gfortran --version`. You should get a response that begins: `gcc (Ubuntu 5.4.0-6ubuntu1~16.04.10) 5.4.0 20160609 ...`
+ 1. Download the Streeter-Phelps model files from [here](https://github.com/HWR-llc/Streeter-Phelps_F2PY/releases/tag/v1.1) or you can connect to the [repo](https://github.com/HWR-llc/Streeter-Phelps_F2PY.git).
+ 2. Open a Terminal and type `sudo apt install gfortran`. 
+ 3. After the installation is complete (with default options), type `gfortran --version`. You should get a response that includes: `...(Ubuntu 5.4.0-6ubuntu1~16.04.10) 5.4.0 20160609 ...`
 
-The next tool to get is Anaconda/Miniconda. If already have one of these you are all set (I recommend doing step 4 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you made that choice.
+The next tool to get is Anaconda/Miniconda. If already have one of these you are all set (I recommend doing step 8 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you made that choice.
 
- 1. Download the [Miniconda](https://conda.io/miniconda.html) bash installer.
- 2. Open a Terminal and change directories to the directory where the bash script was saved. 
- 3. Type `bash Miniconda2-latest-Linux-x86_64.sh`.
- 4. Accept default options until it asks if you want to `...prepend the Miniconda install location to PATH...`. Type `yes`. This will allow you to run the conda commands from your terminal.
- 5. Close the active Terminal and open a new Terminal. In the new Terminal type `conda list`. You should get response that begins: `# packages in environment at /home/username/miniconda2:`
- 6. For troubleshooting the install, see the [detailed installation instructions](https://conda.io/docs/user-guide/install/index.html). 
+ 4. Download the [Miniconda](https://conda.io/miniconda.html) bash installer.
+ 5. Open a Terminal and change directories to the directory where the bash script was saved. 
+ 6. Type `bash Miniconda2-latest-Linux-x86_64.sh`.
+ 7. Accept default options until it asks if you want to `...prepend the Miniconda install location to PATH...`. Type `yes`. This will allow you to run the conda commands from your terminal.
+ 8. Close the active Terminal and open a new Terminal. In the new Terminal type `conda list`. You should get response that begins: `# packages in environment at /home/username/miniconda2:`
+ 9. For troubleshooting the install, see the [detailed installation instructions](https://conda.io/docs/user-guide/install/index.html). 
 
 If you have gfortran and Miniconda installed correctly, you are all set. You can now start working with the Streeter-Phelps model. 
 
 ##### MacOSX Install
 I have tested this with MacOSX 10.10.5 [Yosemite](https://en.wikipedia.org/wiki/OS_X_Yosemite). I already mentioned that you cannot run the Streeter-Phelps model on a 32-bit Mac computer. I also do not know if the steps listed here will work on anything earlier than Yosemite. The first tool you will need is a Fortran compiler. I have tested everything with [gfortran](https://gcc.gnu.org/wiki/GFortran), so I recommend that. In order to install gfortran, you first have to enable the [Xcode](https://en.wikipedia.org/wiki/Xcode) Command Line Tools. Note, you do not need an Apple developer account to access these tools.
 
- 1. Open a terminal and type `xcode-select --install`.  After the installation is complete (with default options), you have a number of new command line tools available to you. Unfortunately, gfortran is not one of them. So we need to add that.
- 2. go to this [gfortran distribution page](https://github.com/fxcoudert/gfortran-for-macOS/releases) and download the operating system appropriate version of gfortran.
- 3. Double click the .dmg file. Extract the folder.
- 4. In your Terminal, navigate to the folder that has the .pkg file.
- 5. Type `sudo installer -pkg gfortran.pkg -target /`. This will install gfortran.
- 6. type `gfortran --version`. You should get a response that begins: `GNU Fortran (GCC) 5.2.0`
+ 1. Download the Streeter-Phelps model files from [here](https://github.com/HWR-llc/Streeter-Phelps_F2PY/releases/tag/v1.1) or you can connect to the [repo](https://github.com/HWR-llc/Streeter-Phelps_F2PY.git).
+ 2. Open a terminal and type `xcode-select --install`.  After the installation is complete (with default options), you have a number of new command line tools available to you. Unfortunately, gfortran is not one of them. So we need to add that.
+ 3. go to this [gfortran distribution page](https://github.com/fxcoudert/gfortran-for-macOS/releases) and download the operating system appropriate version of gfortran.
+ 4. Double click the .dmg file. Extract the folder.
+ 5. In your Terminal, navigate to the folder that has the .pkg file.
+ 6. Type `sudo installer -pkg gfortran.pkg -target /`. This will install gfortran.
+ 7. type `gfortran --version`. You should get a response that includes: `...GNU Fortran (GCC) 5.2.0`
 
-The next tool to get is Anaconda/Miniconda. If already have one of these you are all set (I recommend doing step 4 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you made that choice.
+The next tool to get is Anaconda/Miniconda. If already have one of these you are all set (I recommend doing step 12 below to make sure what you have is working correctly). It does not matter whether you have Python 2.X or Python 3.X. Python versioning gets dealt with later in these instructions as a part of the setting up the [conda environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). If you don't already have Anaconda/Miniconda, I recommend working with Miniconda Python 2.7 for the Streeter-Phelps model. The following instructions assume you made that choice.
 
- 1. Download the [Miniconda](https://conda.io/miniconda.html) bash installer.
- 2. Open a terminal and change directories to the directory where the bash script was downloaded. 
- 3. Type `bash Miniconda2-latest-MacOSX-x86_64.sh`.
- 4. Accept default options until it asks if you want to `...prepend the Miniconda install location to PATH...`. Type `yes`. This will allow you to run conda commands from your terminal.
- 5. Close the active Terminal and open a new Terminal. In the new Terminal type `conda list`. You should get response that begins: `# packages in environment at /home/username/miniconda2:`
- 6. For troubleshooting the install, see the [detailed installation instructions](https://conda.io/docs/user-guide/install/index.html). 
+ 8. Download the [Miniconda](https://conda.io/miniconda.html) bash installer.
+ 9. Open a terminal and change directories to the directory where the bash script was downloaded. 
+ 10. Type `bash Miniconda2-latest-MacOSX-x86_64.sh`.
+ 11. Accept default options until it asks if you want to `...prepend the Miniconda install location to PATH...`. Type `yes`. This will allow you to run conda commands from your terminal.
+ 12. Close the active Terminal and open a new Terminal. In the new Terminal type `conda list`. You should get response that begins: `# packages in environment at /home/username/miniconda2:`
+ 13. For troubleshooting the install, see the [detailed installation instructions](https://conda.io/docs/user-guide/install/index.html). 
 
 #### Running the Streeter-Phelps Model
 Now that we have a Fortran compiler (gfortran) and Miniconda, we are ready to work with the Streeter-Phelps model. We are going to look at two ways to work with Streeter-Phelps model: 
@@ -124,7 +125,7 @@ Follow these steps to compile and link the FORTRAN program. Open a Terminal/Comm
     gfortran -c str_phps_main.f95
     gfortran -o str_phps str_phps_main.o str_phps_mod.o
 
-Each line is a separate command (so hit return after each one!). The first two lines compile the module file and the main file, respectively. The last line links the files together creating the executable str_phps. Note, the file extension will depend on your operating system. To run the model in Windows type `str_phps.exe`, and to run the model in Linux/Mac type CHECK THIS`./str_phps`. Your Terminal/Command Prompt will show the model results, and it will look something like this:
+Each line is a separate command (so hit return after each one!). The first two lines compile the module file and the main file, respectively. The last line links the files together creating the executable str_phps. Note, the file extension will depend on your operating system. To run the model in Windows type `str_phps.exe`, and to run the model in Linux/Mac type `./str_phps`. Your Terminal/Command Prompt will show the model results, and it will look something like this:
 
 ![Fortran Screen View](https://farm5.staticflickr.com/4847/45234508854_8f38f2e825_b.jpg)
 
@@ -133,9 +134,9 @@ In addition to the results being written to Terminal/Command Prompt, a text file
 The purpose of the previous step is to demonstrate that the Fortran code is functional, but what we really want to see is how this works within Python. 
 ##### Python Version of the Model
 Before we can run the Streeter-Phelps model in Python, we need to set up the [environment](https://conda.io/docs/user-guide/tasks/manage-environments.html). This will ensure that you use the correct version of all the packages that work in the background, including F2PY. Open a Terminal/Anaconda Prompt. Note. for Windows users, you need to open Anaconda Prompt, not Command Prompt. Navigate to the `../python`. In that directory are three `.yml` files, one for each operating system. Then follow these two steps:
- 1. Note the file name for your operating system, and type `conda env create -f OS filename` where 'OS filename' is replaced with the appropriate file name (e.g., `fm_win_environment.yml` for Windows). 
+ 1. Note the file name for your operating system, and type `conda env create -f OSfilename` where 'OSfilename' is replaced with the appropriate file name (e.g., `fm_win_environment.yml` for Windows). 
  2. Activate the environment you just created by typing either:
-    - `conda activate fm_win` (for Windows)
+    - `activate fm_win` (for Windows)
     - `activate source fm_linux` (for Linux)
     - `activate source fm_mac` (for Mac)
 
@@ -156,7 +157,7 @@ My motivation for figuring out how to run a Fortran model in Python comes from m
  - HELP - a landfill hydrologic model  that simulates water movement into and through a landfill
  - HEC-5Q - a planning model for reservoir systems
 
-I am confident that there are many other models that fit my definition of legacy models. Most of these models were originally developed by state and federal agencies. They were used in projects at the time of development and in some cases they found their way into regulations. Even as new models are developed that achieve the same end goals, these legacy models remain relevant. Updates to existing projects and planning or permitting often require their use. I will also add another reason why the models are still used. **They are good models!** As an industry, we want to have access to these models.
+I am confident that there are many other models that fit my definition of legacy models. Most of these models were originally developed by state and federal agencies. They were used in projects at the time of development and in some cases they found their way into regulations. Even as new models are developed that achieve the same end goals, these legacy models remain relevant. Updates to existing projects and planning or permitting often require their use. I will also add another reason why the models are still used. **They are good models!** As an industry, we want to have access to these models, but technological changes is making that increasingly difficult.
 
 #### Solutions Requirements
 Any new methods for accessing these models requires a few things.
@@ -168,7 +169,18 @@ Any new methods for accessing these models requires a few things.
 The first two requirements call for action by the state and federal agencies that released the original program. This is a dubious solution. One or two of these models may have a champion within government who supports new development of old models, but it is unlikely that many of the models will achieve new life with this approach. The last two requirements are seemingly contradictory, or at least competing goals. They also call for a system solution that would not require management tools for each model.
 
 #### Proposed Solution
-This Streeter-Phelps model is an example of what I consider a useful solution. Imagine an open source library of Fortran source code that comes with an F2PY setup file for creating extension modules. That would be a great starting point for coders to develop interfaces with these models or to incorporate them into larger coding platforms.
-*more discussion here* 
+I don't have a complete solution that meets all of the requirements stated above, but I think this Streeter-Phelps model is an example of a good starting point for a comprehesive solution. The approach used here would, if applied to legacy models, provide fidelity to the original models (i.e., same source code used) and provide easy distribution and access (i.e., accessibility on all major operating systems). This approach also provides the opportunity to quickly integrate legacy models into a much more complete programming environment. 
+
+Imagine an open source library of Fortran source code that comes with an F2PY setup file for creating extension modules. Anyone with access to this library would be able to immediately use the models, develop user interfaces for the models, and share these developments with other users. By connecting Fortran source code to Python through F2PY, there would be a whole new set of tools that can help address the two remaining solution requirements (impramatur of original agency & method for managing authenticity).
+
+With that concept in mind, give the Streeter-Phelps model a try and please let me know your thoughts on the concepts I've described in this discussion. 
+
+### Quick Start
+1. Connect to Repo: https://github.com/HWR-llc/Streeter-Phelps_F2PY.git
+2. `cd python`
+3. `conda env create -f fm_{OS}_environment.yml`
+4. `conda activate fm_{OS}`
+5. `python f2py_setup_check.py`
+6. `python str_phps_py_gui.py`
 
 > Written with [StackEdit](https://stackedit.io/).
