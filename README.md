@@ -5,7 +5,7 @@ In the field of water resources, many of the models that we use today were writt
 
 I think the best solution would be to have an updated version of the program that is compatible with current operating systems. Many of the legacy models have computational engines that were written in [Fortran](https://en.wikipedia.org/wiki/Fortran). So I set out to find a reasonable way to bring these legacy Fortran models into an easily accessible environment that is compatible with modern computers.  
 
-You can read about what I came up with below, but if you just want to try out the code and you have all the tools you need (Fortran compiler, Anaconda/Miniconda), you can use this [Quick Start](link).
+You can read about what I came up with below, but if you just want to try out the code and you have all the tools you need (Fortran compiler, Anaconda/Miniconda), you can use this [Quick Start](https://github.com/HWR-llc/Streeter-Phelps_F2PY#quick-start).
 ### Streeter-Phelps Model in Fortran
 The first thing that I needed was a Fortran model to work with. So I wrote a (relatively) simple [Streeter-Phelps](https://en.wikipedia.org/wiki/Streeter%E2%80%93Phelps_equation) model in Fortran95. Streeter-Phelps predicts dissolved oxygen (DO) in a river as a function of:
  - DO at the upstream end of model,
