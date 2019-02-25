@@ -48,7 +48,7 @@ We have a Fortran model, and we have a method for accessing it in a modern compu
 
 ### Working with the Streeter-Phelps Model
 
-If you want to work with the model, you can access it two different ways. You can either compile and run the Fortran code or you can use F2PY to create a Python interface. The second option is more exciting because it allows you to access all of the powerful packages that other people have written for Python (e.g., GUIs). These instructions tell you how to both.
+If you want to work with the model, you can access it two different ways. You can either compile and run the Fortran code or you can use F2PY to create a Python interface. The second option is more exciting because it allows you to access all of the powerful packages that other people have written for Python (e.g., GUIs). These instructions tell you how to do both.
 
 #### Get the Model and the Supporting Tools
 There are operating specific installation instructions below. In general, you will need three things to run the Streeter-Phelps model. You will need: the model files, a Fortran compiler, and an installation of Python. A quick note for Mac users. These instructions use Anaconda/Miniconda, and Anaconda/Miniconda require 64-bit operating systems. So if you have a 32-bit Mac, you will not be able to use this Streeter-Phelps model in Python.
